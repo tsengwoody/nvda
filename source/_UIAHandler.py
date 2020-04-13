@@ -1,6 +1,6 @@
 # _UIAHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -149,7 +149,7 @@ UIAPropertyIdsToNVDAEventNames={
 
 UIALandmarkTypeIdsToLandmarkNames: Dict[int, str] = {
 	UIA.UIA_FormLandmarkTypeId: "form",
-	UIA.UIA_NavigationLandmarkTypeId: "nav",
+	UIA.UIA_NavigationLandmarkTypeId: "navigation",
 	UIA.UIA_MainLandmarkTypeId: "main",
 	UIA.UIA_SearchLandmarkTypeId: "search",
 }
@@ -501,10 +501,12 @@ class UIAHandler(COMObject):
 
 	def _isBadUIAWindowClassName(self, windowClass):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
-		if (
-			windowClass == "ConsoleWindowClass"
-			and not UIAUtils.shouldUseUIAConsole()
-		):
+		# #7497: Windows 10 Fall Creators Update has an incomplete UIA
+		# implementation for console windows, therefore for now we should
+		# ignore it.
+		# It does not implement caret/selection, and probably has no new text
+		# events.
+		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
 			return True
 		return windowClass in badUIAWindowClassNames
 
