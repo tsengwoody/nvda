@@ -2498,6 +2498,13 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
+		label = _("Use UI Automation to access Microsoft &Excel spreadsheet controls when available")
+		self.UIAInMSExcelCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.UIAInMSExcelCheckBox.SetValue(config.conf["UIA"]["useInMSExcelWhenAvailable"])
+		self.UIAInMSExcelCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSExcelWhenAvailable"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
 		label = _("Use UI Automation to access the Windows C&onsole when available")
 		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox = UIAGroup.addItem(wx.CheckBox(self, label=label))
@@ -2640,6 +2647,7 @@ class AdvancedPanelControls(wx.Panel):
 				== self.selectiveUIAEventRegistrationCheckBox.defaultValue
 			)
 			and self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue
+			and self.UIAInMSExcelCheckBox.IsChecked() == self.UIAInMSExcelCheckBox.defaultValue
 			and self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue == 'UIA')
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue
 			and self.cancelExpiredFocusSpeechCombo.GetSelection() == self.cancelExpiredFocusSpeechCombo.defaultValue
@@ -2653,6 +2661,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.selectiveUIAEventRegistrationCheckBox.SetValue(self.selectiveUIAEventRegistrationCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.UIAInMSExcelCheckBox.SetValue(self.UIAInMSExcelCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue == 'UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -2666,6 +2675,7 @@ class AdvancedPanelControls(wx.Panel):
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["selectiveEventRegistration"] = self.selectiveUIAEventRegistrationCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["UIA"]["useInMSExcelWhenAvailable"]=self.UIAInMSExcelCheckBox.IsChecked()
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
