@@ -1,8 +1,8 @@
-#  -*- coding: UTF-8 -*-
+﻿#  -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
 """High-level functions to speak information.
